@@ -1,0 +1,50 @@
+version: "3.7"
+
+services:
+
+  # Requires the build of the stubs first
+  http-service-1:
+    image: buddhiwathsala/myserver:0.1.0
+    ports:
+    - "9112:9112"
+    networks:
+      envoymesh:
+        aliases:
+        - vk-backend-service
+
+  http-service-1-proxy:
+    build:
+      context: .
+      dockerfile: Dockerfile-server
+    networks:
+      envoymesh:
+        aliases:
+        - vk-backend-proxy
+    ports:
+    - "8811:8811"
+
+  # Requires the build of the stubs first
+  http-service-2:
+    image: buddhiwathsala/myclient:0.1.0
+    build:
+      context: client
+    ports:
+    - "9113:9113"
+    environment:
+    - CLIENT_PROXY=http://vk-client-proxy:9911
+    networks:
+    - envoymesh
+
+  http-service-2-proxy:
+    build:
+      context: .
+      dockerfile: Dockerfile-client
+    networks:
+      envoymesh:
+        aliases:
+        - vk-client-proxy
+    ports:
+    - "9911:9911"
+
+networks:
+  envoymesh: {}
