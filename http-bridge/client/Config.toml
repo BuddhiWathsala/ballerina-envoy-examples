@@ -1,0 +1,3 @@
+[client]
+CLIENT_PROXY = "http://vk-client-proxy:9911"
+# CLIENT_PROXY = "http://0.0.0.0:9112"

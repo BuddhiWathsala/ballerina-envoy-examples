@@ -1,0 +1,4 @@
+[container.image]
+name = "myclient"
+repository = "buddhiwathsala"
+tag = "0.1.0"
